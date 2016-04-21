@@ -8,9 +8,11 @@
 
 #include "MFile.hpp"
 
-MFile::MFile(const string& path, const int& permission) {
+MFile::MFile(const string& path) {
     m_name = path;
-    m_permission = permission;
+}
+
+MFile::~MFile() {
 }
 
 string MFile::getName() {

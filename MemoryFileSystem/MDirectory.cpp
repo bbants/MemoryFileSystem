@@ -8,13 +8,18 @@
 
 #include "MDirectory.hpp"
 
-MDirectory::MDirectory(MDirectory* parent, const string& name, const int& permission) {
+MDirectory::MDirectory(MDirectory* parent, const string& name) {
     m_parent = parent;
     m_directory_name = name;
-    m_permission = permission;
 }
 
 MDirectory::~MDirectory() {
+    for(auto p: m_directory_container) {
+        delete p.second;
+    }
+    for(auto p: m_file_container) {
+        delete p.second;
+    }
 }
 
 string MDirectory::getDirectoryName() {
@@ -70,8 +75,10 @@ MDirectory* MDirectory::cd(const string& path) {
         // go to parent directory
         string remainPath = path.substr(slash+1, path.length()-slash-1);
         return m_parent->cd(remainPath);
-    } else if(m_directory_container.find(curPath) != m_directory_container.end()) {    // check if the cur path exists
-        if(slash == path.length() - 1) {        // reach the last path
+    } else if(m_directory_container.find(curPath) != m_directory_container.end()) {
+        // check if the cur path exists
+        if(slash == path.length() - 1) {
+            // reach the last path
             return m_directory_container[curPath];
         }else {
             string remainPath = path.substr(slash+1, path.length()-slash-1);
@@ -79,4 +86,22 @@ MDirectory* MDirectory::cd(const string& path) {
         }
     }
     return NULL;
+}
+
+void MDirectory::rm(const string& path) {
+    if(path[path.length()-1] == '/') {
+        // remove a directory
+        string dirPath = path.substr(0, path.length()-1);
+        if(m_directory_container.find(dirPath) != m_directory_container.end()) {
+            delete m_directory_container[dirPath];
+            m_directory_container.erase(dirPath);
+        }
+    } else {
+        // remove a file
+        if(m_file_container.find(path) != m_file_container.end()) {
+            delete m_file_container[path];
+            m_file_container.erase(path);
+        }
+        
+    }
 }

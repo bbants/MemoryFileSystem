@@ -21,6 +21,7 @@ public:
     void cd(const string& path);
     void mkdir(const string& path);
     void touch(const string& path);
+    void rm(const string& path);
     void write(const string& path, const string& content);
     
     MFileSystem();

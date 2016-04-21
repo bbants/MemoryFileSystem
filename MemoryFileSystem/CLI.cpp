@@ -43,6 +43,9 @@ void CLI::run() {
                 path = path + "/";
             }
             m_file_system->cd(path);
+        } else if(command == "rm") {
+            ss >> path;
+            m_file_system->rm(path);
         } else if(command == "exit") {
             return;
         }

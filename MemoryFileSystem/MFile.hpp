@@ -15,16 +15,15 @@ using namespace std;
 class MFile {
 public:
     string getName();
-    void write(const string& content);
     string cat();
+    void write(const string& content);
     
-    MFile(const string& path, const int& permission=7);
+    MFile(const string& path);
     ~MFile();
 private:
     string m_name;
     string m_crtime;
     string m_content;
-    int m_permission;
 };
 
 #endif /* MFile_hpp */

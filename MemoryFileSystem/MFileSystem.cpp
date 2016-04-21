@@ -52,3 +52,7 @@ void MFileSystem::cd(const string& path) {
         m_cur_directory = m_cur_directory->cd(path);
     }
 }
+
+void MFileSystem::rm(const string& path) {
+    m_cur_directory->rm(path);
+}
