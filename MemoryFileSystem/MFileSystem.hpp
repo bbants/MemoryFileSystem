@@ -15,6 +15,14 @@ using namespace std;
 
 class MFileSystem {
 public:
+    string getCurrentDirectory();
+    string ls();
+    string cat(const string& path);
+    void cd(const string& path);
+    void mkdir(const string& path);
+    void touch(const string& path);
+    void write(const string& path, const string& content);
+    
     MFileSystem();
     ~MFileSystem();
     

@@ -16,6 +16,7 @@ using namespace std;
 class CLI {
 public:
     void run();
+    
     CLI();
     ~CLI();
 private:

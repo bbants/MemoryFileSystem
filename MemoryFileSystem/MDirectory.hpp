@@ -16,12 +16,19 @@ using namespace std;
 
 class MDirectory {
 public:
-    MDirectory* cd(string path);            // return the pointer of a directory by a path
+    MDirectory* cd(const string& path);     // return the pointer of a directory by a path
     string ls();                            // show all files and directories in this directory
     void rm(string path);                   // remove a file or a directory
     void chmod(int permission);             // change the permission
     string pwd();                           // return the path of this directory
-    void touch(string file_name);           // create a file in this directory
+    string getDirectoryName();              // get the name of this directory
+    string cat(const string& path);         // output the content of a file
+    void touch(const string& path);         // create a file in this directory
+    void mkdir(const string& path);         // make a new directory in this directory
+    void write(const string& path, const string& content); // write something to a file
+    
+    MDirectory(MDirectory* parent, const string& name, const int& permission=7);
+    ~MDirectory();
     
 private:
     string m_directory_name;

@@ -14,13 +14,16 @@ using namespace std;
 
 class MFile {
 public:
-    void write();
-    void read();
+    string getName();
+    void write(const string& content);
+    string cat();
     
+    MFile(const string& path, const int& permission=7);
+    ~MFile();
 private:
     string m_name;
     string m_crtime;
-    string m_data;
+    string m_content;
     int m_permission;
 };
 
