@@ -12,6 +12,7 @@
 		C9DA575F1CC9168F00BA6D1F /* MDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DA575D1CC9168F00BA6D1F /* MDirectory.cpp */; };
 		C9DA57621CC93B9300BA6D1F /* MFileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DA57601CC93B9300BA6D1F /* MFileSystem.cpp */; };
 		C9DA57651CC93F6B00BA6D1F /* CLI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DA57631CC93F6B00BA6D1F /* CLI.cpp */; };
+		C9DA57841CCAB0D800BA6D1F /* MElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C9DA57821CCAB0D800BA6D1F /* MElement.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,8 @@
 		C9DA57611CC93B9300BA6D1F /* MFileSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MFileSystem.hpp; sourceTree = "<group>"; };
 		C9DA57631CC93F6B00BA6D1F /* CLI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CLI.cpp; sourceTree = "<group>"; };
 		C9DA57641CC93F6B00BA6D1F /* CLI.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CLI.hpp; sourceTree = "<group>"; };
+		C9DA57821CCAB0D800BA6D1F /* MElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MElement.cpp; sourceTree = "<group>"; };
+		C9DA57831CCAB0D800BA6D1F /* MElement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MElement.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +81,8 @@
 				C9DA57611CC93B9300BA6D1F /* MFileSystem.hpp */,
 				C9DA57631CC93F6B00BA6D1F /* CLI.cpp */,
 				C9DA57641CC93F6B00BA6D1F /* CLI.hpp */,
+				C9DA57821CCAB0D800BA6D1F /* MElement.cpp */,
+				C9DA57831CCAB0D800BA6D1F /* MElement.hpp */,
 			);
 			path = MemoryFileSystem;
 			sourceTree = "<group>";
@@ -142,6 +147,7 @@
 				C9DA575F1CC9168F00BA6D1F /* MDirectory.cpp in Sources */,
 				C9DA57651CC93F6B00BA6D1F /* CLI.cpp in Sources */,
 				C9DA57621CC93B9300BA6D1F /* MFileSystem.cpp in Sources */,
+				C9DA57841CCAB0D800BA6D1F /* MElement.cpp in Sources */,
 				C9DA575C1CC9153000BA6D1F /* MFile.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,6 +269,7 @@
 				C9DA57591CC914F100BA6D1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

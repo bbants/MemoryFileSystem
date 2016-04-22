@@ -10,20 +10,20 @@
 #define MFile_hpp
 
 #include<iostream>
+#include "MElement.hpp"
 using namespace std;
 
-class MFile {
+class MFile:public MElement {
 public:
-    string getName();
     string cat();
-    string getTime();
     void write(const string& content);
+    
+    virtual string getName();
+    virtual int getSize();
     
     MFile(const string& path);
     ~MFile();
 private:
-    string m_name;
-    string m_create_time;
     string m_content;
 };
 

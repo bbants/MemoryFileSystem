@@ -12,29 +12,26 @@
 #include <iostream>
 #include <map>
 #include "MFile.hpp"
+#include "MElement.hpp"
 using namespace std;
 
-class MDirectory {
+class MDirectory: public MElement {
 public:
-    MDirectory* cd(const string& path);                     // return the pointer of a directory by a path
+    MElement* cd(const string& path);                       // return the pointer of an element by a path
     string ls();                                            // show all files and directories in this directory
     void rm(const string& path);                            // remove a file or a directory
-    string getDirectoryName();                              // get the name of this directory
-    string getTime();                                       // get create time of the directory
-    string cat(const string& path);                         // output the content of a file
     void touch(const string& path);                         // create a file in this directory
     void mkdir(const string& path);                         // make a new directory in this directory
-    void write(const string& path, const string& content);  // write something to a file
+    map<string, MElement*> getContainer();
+    
+    virtual string getName();                               // get the name of directory
+    virtual int getSize();                                  // get the size of directory
     
     MDirectory(MDirectory* parent, const string& name);
-    ~MDirectory();
+    virtual ~MDirectory();
     
 private:
-    string m_directory_name;
-    string m_create_time;
-    MDirectory* m_parent;
-    map<string, MDirectory*> m_directory_container;
-    map<string, MFile*> m_file_container;
+    map<string, MElement*> m_container;
 };
 
 #endif /* MDirectory_hpp */

@@ -17,7 +17,7 @@ MFileSystem::~MFileSystem() {
 }
 
 string MFileSystem::getCurrentDirectory() {
-    return m_cur_directory->getDirectoryName();
+    return m_cur_directory->getName();
 }
 
 void MFileSystem::mkdir(const string& path) {
@@ -33,11 +33,11 @@ void MFileSystem::touch(const string& path) {
 }
 
 string MFileSystem::cat(const string& path) {
-    return m_cur_directory->cat(path);
+    return ((MFile*)m_cur_directory->cd(path))->cat();
 }
 
 void MFileSystem::write(const string& path, const string& content) {
-    return m_cur_directory->write(path, content);
+    return ((MFile*)m_cur_directory->cd(path))->write(content);
 }
 
 void MFileSystem::cd(const string& path) {
@@ -46,10 +46,10 @@ void MFileSystem::cd(const string& path) {
         // absolute path
         // remove the first /
         string remainPath = path.substr(1, path.length()-1);
-        m_cur_directory = m_root_directory->cd(remainPath);
+        m_cur_directory = (MDirectory*)m_root_directory->cd(remainPath);
     } else {
         // relative path
-        m_cur_directory = m_cur_directory->cd(path);
+        m_cur_directory = (MDirectory*)m_cur_directory->cd(path);
     }
 }
 

@@ -9,108 +9,81 @@
 #include "MDirectory.hpp"
 #include <ctime>
 
-MDirectory::MDirectory(MDirectory* parent, const string& name) {
+MDirectory::MDirectory(MDirectory* parent, const string& name): MElement(name) {
     m_parent = parent;
-    m_directory_name = name;
-    time_t now = time(0);
-    m_create_time = ctime(&now);
-    // remove \n in the last
-    m_create_time = m_create_time.substr(0, m_create_time.length()-1);
 }
 
 MDirectory::~MDirectory() {
-    for(auto p: m_directory_container) {
-        delete p.second;
-    }
-    for(auto p: m_file_container) {
+    for(auto p: m_container) {
         delete p.second;
     }
 }
 
-string MDirectory::getDirectoryName() {
-    return m_directory_name + "/";
-}
-
-string MDirectory::getTime() {
-    return m_create_time;
+string MDirectory::getName() {
+    return m_name + "/";
 }
 
 void MDirectory::mkdir(const string& path) {
     MDirectory* newDir = new MDirectory(this, path);
-    m_directory_container[path] = newDir;
+    m_container[newDir->getName()] = (MElement*)newDir;
 }
 
 string MDirectory::ls() {
     string result;
-    for(auto p: m_directory_container) {
-        result += "  " + p.second->getTime()+ "\t\t" + p.second->getDirectoryName() + "\n";
-    }
-    for(auto p: m_file_container) {
-        result += "  " + p.second->getTime()+ "\t\t" + p.second->getName() + "\n";
+    for(auto p: m_container) {
+        result += p.second->getLastUpdateTime()+ "  \t" + to_string(p.second->getSize()) + "  \t" + p.second->getName() + "\n";
     }
     return result;
 }
 
 void MDirectory::touch(const string& path) {
     MFile* newFile = new MFile(path);
-    m_file_container[path] = newFile;
+    m_container[path] = (MElement*)newFile;
 }
 
-// output the content of a file
-string MDirectory::cat(const string& path) {
-    if(m_file_container.find(path) != m_file_container.end()) {
-        return m_file_container[path]->cat();
-    } else {
-        // to do
-        // throw an error
-        return "";
-    }
+map<string, MElement*> MDirectory::getContainer() {
+    return m_container;
 }
 
-// write some content to a file
-void MDirectory::write(const string& path, const string& content) {
-    if(m_file_container.find(path) != m_file_container.end()) {
-        m_file_container[path]->write(content);
-    }
+void MDirectory::rm(const string& path) {
+    delete m_container[path];
+    m_container.erase(path);
 }
 
-MDirectory* MDirectory::cd(const string& path) {
+
+MElement* MDirectory::cd(const string& path) {
     if(path == "") {
-        return this;
+        return (MElement*)this;
     }
-    int slash = path.find_first_of('/');
-    string curPath = path.substr(0, slash);
-    if(curPath == "..") {
+    int slash;
+    for(slash=0; slash<path.length(); slash++) {
+        if(path[slash] == '/') {
+            break;
+        }
+    }
+    string curPath = path.substr(0, slash+1);
+    if(curPath == "../") {
         // go to parent directory
-        string remainPath = path.substr(slash+1, path.length()-slash-1);
-        return m_parent->cd(remainPath);
-    } else if(m_directory_container.find(curPath) != m_directory_container.end()) {
+        string remainPath = path.substr(slash+1, path.length()-slash);
+        return ((MDirectory*)m_parent)->cd(remainPath);
+    } else if(m_container.find(curPath) != m_container.end()) {
         // check if the cur path exists
-        if(slash == path.length() - 1) {
-            // reach the last path
-            return m_directory_container[curPath];
+        if(slash == path.length()) {
+            // reach a file
+            return m_container[curPath];
         }else {
+            // reach a directory
             string remainPath = path.substr(slash+1, path.length()-slash-1);
-            return m_directory_container[curPath]->cd(remainPath);
+            return ((MDirectory*)m_container[curPath])->cd(remainPath);
         }
     }
     return NULL;
 }
 
-void MDirectory::rm(const string& path) {
-    if(path[path.length()-1] == '/') {
-        // remove a directory
-        string dirPath = path.substr(0, path.length()-1);
-        if(m_directory_container.find(dirPath) != m_directory_container.end()) {
-            delete m_directory_container[dirPath];
-            m_directory_container.erase(dirPath);
-        }
-    } else {
-        // remove a file
-        if(m_file_container.find(path) != m_file_container.end()) {
-            delete m_file_container[path];
-            m_file_container.erase(path);
-        }
-        
+int MDirectory::getSize() {
+    int size = 0;
+    for(auto p: m_container) {
+        size += p.second->getSize();
     }
+    return size;
 }
