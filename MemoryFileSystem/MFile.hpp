@@ -16,13 +16,14 @@ class MFile {
 public:
     string getName();
     string cat();
+    string getTime();
     void write(const string& content);
     
     MFile(const string& path);
     ~MFile();
 private:
     string m_name;
-    string m_crtime;
+    string m_create_time;
     string m_content;
 };
 

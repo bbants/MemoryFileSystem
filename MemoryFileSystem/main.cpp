@@ -10,6 +10,8 @@
 #include "CLI.hpp"
 using namespace std;
 
+#include <ctime>
+
 int main(int argc, const char * argv[]) {
     
     CLI cli;

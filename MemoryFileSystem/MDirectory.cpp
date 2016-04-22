@@ -7,10 +7,15 @@
 //
 
 #include "MDirectory.hpp"
+#include <ctime>
 
 MDirectory::MDirectory(MDirectory* parent, const string& name) {
     m_parent = parent;
     m_directory_name = name;
+    time_t now = time(0);
+    m_create_time = ctime(&now);
+    // remove \n in the last
+    m_create_time = m_create_time.substr(0, m_create_time.length()-1);
 }
 
 MDirectory::~MDirectory() {
@@ -26,6 +31,10 @@ string MDirectory::getDirectoryName() {
     return m_directory_name + "/";
 }
 
+string MDirectory::getTime() {
+    return m_create_time;
+}
+
 void MDirectory::mkdir(const string& path) {
     MDirectory* newDir = new MDirectory(this, path);
     m_directory_container[path] = newDir;
@@ -34,10 +43,10 @@ void MDirectory::mkdir(const string& path) {
 string MDirectory::ls() {
     string result;
     for(auto p: m_directory_container) {
-        result += p.second->getDirectoryName() + "\n";
+        result += "  " + p.second->getTime()+ "\t\t" + p.second->getDirectoryName() + "\n";
     }
     for(auto p: m_file_container) {
-        result += p.second->getName() + "\n";
+        result += "  " + p.second->getTime()+ "\t\t" + p.second->getName() + "\n";
     }
     return result;
 }

@@ -16,13 +16,13 @@ using namespace std;
 class MFileSystem {
 public:
     string getCurrentDirectory();
-    string ls();
-    string cat(const string& path);
-    void cd(const string& path);
-    void mkdir(const string& path);
-    void touch(const string& path);
-    void rm(const string& path);
-    void write(const string& path, const string& content);
+    string ls();                                            // show the files and directories in the current directory
+    string cat(const string& path);                         // output the content of a file
+    void cd(const string& path);                            // go to a path
+    void mkdir(const string& path);                         // create a new directory
+    void touch(const string& path);                         // create a new file
+    void rm(const string& path);                            // remove a file or a directory
+    void write(const string& path, const string& content);  // write something to a file
     
     MFileSystem();
     ~MFileSystem();
